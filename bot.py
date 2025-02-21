@@ -75,5 +75,20 @@ async def ping(ctx, *, arg=None):
         await ctx.send(f"Pong! Your argument was {arg}")
 
 
+@bot.command(name="events", help="Shows upcoming calendar events")
+async def events(ctx, max_results: int = 5):
+    events = await agent.get_upcoming_events(max_results)
+    if not events:
+        await ctx.send('No upcoming events found.')
+        return
+        
+    response = "Upcoming events:\n"
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        response += f"- {event['summary']} ({start})\n"
+    
+    await ctx.send(response)
+
+
 # Start the bot, connecting it to the gateway
 bot.run(token)
