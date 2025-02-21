@@ -11,3 +11,8 @@ wheels/
 
 # Secrets
 .env
+
+credentials.json
+
+token.pickle
+
